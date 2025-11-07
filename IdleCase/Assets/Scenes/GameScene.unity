@@ -883,6 +883,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7138634581136104644, guid: 5bd01bd5992f4df45b7f66669a0a6355, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4414540888776881167}
+    - targetCorrespondingSourceObject: {fileID: 7138634581136104644, guid: 5bd01bd5992f4df45b7f66669a0a6355, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4414540888776881168}
   m_SourcePrefab: {fileID: 100100000, guid: 5bd01bd5992f4df45b7f66669a0a6355, type: 3}
 --- !u!4 &4414540888776881165 stripped
 Transform:
@@ -908,6 +911,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatingJoystick: {fileID: 1223713131}
   movementSettings: {fileID: 11400000, guid: ef46686b39126e1468204850f304813b, type: 2}
+--- !u!143 &4414540888776881168
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4414540888776881166}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
