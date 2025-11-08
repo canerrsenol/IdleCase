@@ -1,10 +1,13 @@
 using System;
+using Unity.AI.Navigation;
+using UnityEngine;
 
 public class GameManager : MonoSingleton<GameManager>
 {
     public GameState GameState;
     public event Action<GameState> OnGameStateChanged;
-    public GlobalEventsSO globalEvents;
+    [SerializeField] private GlobalEventsSO globalEvents;
+    [SerializeField] private NavMeshSurface navMeshSurface;
 
     public void CompleteLevel()
     {
@@ -21,6 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
             case GameState.Initialized:
                 break;
             case GameState.Started:
+                navMeshSurface.BuildNavMesh();
                 break;
             case GameState.Win:
                 break;

@@ -2,12 +2,7 @@ using UnityEngine;
 
 public class EnemyAnimationController : MonoBehaviour
 {
-    private Animator animator;
-
-    void Awake()
-    {
-        animator = GetComponentInChildren<Animator>();
-    }
+    [SerializeField] private Animator animator;
 
     public void SetAnimationState(EnemyAnimationState state)
     {

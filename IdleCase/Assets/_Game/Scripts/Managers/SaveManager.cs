@@ -1,65 +1,41 @@
 using UnityEngine;
 
-public class SaveLoad : MonoBehaviour
+public class SaveManager : MonoSingleton<SaveManager>
 {
-    public static SaveLoad I;
-
     public PlayerProgress playerProgress;
-
-    private string playerSaveName = "PlayerSave";
+    private const string PlayerSaveKey = "PlayerSave";
 
     private void Awake()
     {
-        I = this;
-
-        if (!PlayerPrefs.HasKey(playerSaveName))
-        {
-            playerProgress = new PlayerProgress();
-            playerProgress.gold = 0;
-            playerProgress.hapticsOn = true;
-            playerProgress.soundOn = true;
-            playerProgress.currentLevel = 0;
-            playerProgress.secondLevelListIndex = 0;
-            
-            SaveToJson();
-        }
-        else
+        if (PlayerPrefs.HasKey(PlayerSaveKey))
         {
             LoadFromJson();
         }
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
+        else
         {
+            playerProgress = new PlayerProgress
+            {
+                currentLevel = 0,
+                secondLevelListIndex = 0,
+                totalDefeatedEnemyCount = 0
+            };
             SaveToJson();
         }
     }
 
-
-    #region SAVE/LOAD
     public void SaveToJson()
     {
-        string content = JsonUtility.ToJson(playerProgress, false);
-
-        PlayerPrefs.SetString(playerSaveName, content);
+        string content = JsonUtility.ToJson(playerProgress);
+        PlayerPrefs.SetString(PlayerSaveKey, content);
         PlayerPrefs.Save();
     }
 
-    private void LoadFromJson()
+    public void LoadFromJson()
     {
-        if (PlayerPrefs.HasKey(playerSaveName))
+        if (PlayerPrefs.HasKey(PlayerSaveKey))
         {
-            string content = PlayerPrefs.GetString(playerSaveName);
+            string content = PlayerPrefs.GetString(PlayerSaveKey);
             playerProgress = JsonUtility.FromJson<PlayerProgress>(content);
         }
-        else
-        {
-
-
-            SaveToJson();
-        }
     }
-    #endregion SAVE/LOAD
 }

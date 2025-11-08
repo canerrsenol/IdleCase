@@ -1,19 +1,24 @@
-using Cinemachine;
 using UnityEngine;
 
 public class LevelData : MonoBehaviour
 {
-    public bool IsHardLevel;
-    public bool IsTutorialLevel;
-    public int GoldToCollect = 50;
-    public float TotalSecond = 60f;
+    [Header("General Settings")]
+    [Tooltip("Level süresi (saniye cinsinden). Örn: 180 = 3 dakika")]
+    public float totalSeconds = 180f;
 
-    void Start()
-    {
-        // // Increase the priority of the virtual camera to ensure it is active
-        // if (virtualCamera != null)
-        // {
-        //     virtualCamera.Priority = 12; // Set a high priority to make sure this camera is active
-        // }
-    }
+    [Header("Wave Settings")]
+    [Tooltip("İlk dalgadaki düşman sayısı.")]
+    public int baseEnemyCount = 5;
+
+    [Tooltip("Her dalgada düşman sayısına eklenecek miktar.")]
+    public int enemyCountIncrement = 2;
+
+    [Tooltip("Dalgalar arası bekleme süresi (saniye).")]
+    public float timeBetweenWaves = 20f;
+
+    [Tooltip("Spawn yarıçapı (oyuncunun etrafında).")]
+    public float spawnRadius = 8f;
+
+    [Tooltip("Aynı wave içindeki düşman spawn aralığı (saniye).")]
+    public float spawnInterval = 0.3f;
 }

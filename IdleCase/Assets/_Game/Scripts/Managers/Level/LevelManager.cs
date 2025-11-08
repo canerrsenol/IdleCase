@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        //LoadLevel();
+        LoadLevel();
     }
 
     private void Update()
@@ -32,11 +32,11 @@ public class LevelManager : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        SaveLoad.I.playerProgress.currentLevel++;
-        SaveLoad.I.SaveToJson();
+        SaveManager.Instance.playerProgress.currentLevel++;
+        SaveManager.Instance.SaveToJson();
 
-        Debug.Log("Loading next level: " + SaveLoad.I.playerProgress.currentLevel);
-        
+        Debug.Log("Loading next level: " + SaveManager.Instance.playerProgress.currentLevel);
+
         LoadLevel();
     }
 
@@ -55,7 +55,7 @@ public class LevelManager : MonoBehaviour
 
         CreateContent();
         yield return new WaitForSeconds(.05f);
-        GameManager.Instance.ChangeGameState(GameState.Initialized);
+        GameManager.Instance.ChangeGameState(GameState.Started);
     }
 
     private void DestroyOldContent()
@@ -68,14 +68,14 @@ public class LevelManager : MonoBehaviour
 
     private void CreateContent()
     {
-        if (SaveLoad.I.playerProgress.currentLevel >= levelList.Length)
+        if (SaveManager.Instance.playerProgress.currentLevel >= levelList.Length)
         {
             currentLevelData =
-                secondLevelList[GetContentIndexFromSecondList(SaveLoad.I.playerProgress.secondLevelListIndex)];
+                secondLevelList[GetContentIndexFromSecondList(SaveManager.Instance.playerProgress.secondLevelListIndex)];
         }
         else
         {
-            currentLevelData = levelList[GetContentIndexFromLevelList(SaveLoad.I.playerProgress.currentLevel)];
+            currentLevelData = levelList[GetContentIndexFromLevelList(SaveManager.Instance.playerProgress.currentLevel)];
         }
 
         levelContent = Instantiate(currentLevelData.gameObject);
