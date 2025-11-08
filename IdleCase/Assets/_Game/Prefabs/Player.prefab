@@ -40,14 +40,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8413181555405893964}
+  - component: {fileID: 2027913632825491132}
   - component: {fileID: 2219688319544706333}
+  - component: {fileID: 4557613860912740233}
   - component: {fileID: 2502268456643385305}
   - component: {fileID: 3138601622009353930}
-  - component: {fileID: 4557613860912740233}
-  - component: {fileID: 2027913632825491132}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,6 +68,22 @@ Transform:
   - {fileID: 6036910188683531807}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2027913632825491132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7138634581136104644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79096e16e63d3c47a19a40255056126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  movementController: {fileID: 2219688319544706333}
+  shootController: {fileID: 4557613860912740233}
+  animationController: {fileID: 2502268456643385305}
 --- !u!114 &2219688319544706333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,6 +98,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatingJoystick: {fileID: 0}
   movementSettings: {fileID: 11400000, guid: ef46686b39126e1468204850f304813b, type: 2}
+--- !u!114 &4557613860912740233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7138634581136104644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5f023be920f5546a2f65dee44fd91d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootSettings: {fileID: 11400000, guid: 4d4195a62444ac64e8364981b27fef3f, type: 2}
+  enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  shootPoint: {fileID: 4955350617327976903}
+  characterVisualTransform: {fileID: 6036910188683531807}
+  rotationSpeed: 5
 --- !u!114 &2502268456643385305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,37 +155,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &4557613860912740233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7138634581136104644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c5f023be920f5546a2f65dee44fd91d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootSettings: {fileID: 11400000, guid: 4d4195a62444ac64e8364981b27fef3f, type: 2}
-  enemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  shootPoint: {fileID: 4955350617327976903}
-  characterVisualTransform: {fileID: 6036910188683531807}
-  rotationSpeed: 5
---- !u!114 &2027913632825491132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7138634581136104644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79096e16e63d3c47a19a40255056126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &4789286253466768366
 PrefabInstance:
   m_ObjectHideFlags: 0

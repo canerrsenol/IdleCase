@@ -6,11 +6,18 @@ public class MovementController : MonoBehaviour
     [SerializeField] private MovementSettingsSO movementSettings;
     private CharacterController controller;
     private PlayerAnimationController animationController;
+    private bool canMove = true;
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
         animationController = GetComponent<PlayerAnimationController>();
+    }
+
+    public void SetMovementControllerState(bool state)
+    {
+        floatingJoystick.gameObject.SetActive(state);
+        canMove = state;
     }
 
     void Update()

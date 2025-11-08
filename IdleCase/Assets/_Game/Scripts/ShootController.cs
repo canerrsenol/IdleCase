@@ -12,6 +12,7 @@ public class ShootController : MonoBehaviour
     private BulletPool bulletPool;
     private EnemyController closestEnemy;
     private float shootTimer;
+    private bool canShoot = true;
 
     private void Awake()
     {
@@ -20,11 +21,20 @@ public class ShootController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canShoot) return;
+
         FindClosestEnemy();
+    }
+
+    public void SetShootControllerState(bool state)
+    {
+        canShoot = state;
     }
 
     private void Update()
     {
+        if (!canShoot) return;
+
         if (closestEnemy == null) return;
 
         // hedef yönü

@@ -10,27 +10,29 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] private EnemyAnimationController animationController;
     private PlayerController playerController;
     private EnemyPool enemyPool;
+    private GameManager gameManager;
     private bool isDead = false;
     private bool isAttacking = false;
 
     void Awake()
     {
         enemyPool = EnemyPool.Instance;
-    }
-
-    void Start()
-    {
-        agent.speed = enemySettings.moveSpeed;
+        gameManager = GameManager.Instance;
     }
 
     void OnEnable()
     {
-        if(enemyPool == null)
+        if (enemyPool == null)
             enemyPool = EnemyPool.Instance;
         enemyCollider.enabled = true;
         isDead = false;
         health = enemySettings.maxHealth;
         animationController.SetAnimationState(EnemyAnimationState.Running);
+
+        agent.speed = enemySettings.moveSpeed;
+        agent.acceleration = enemySettings.acceleration;
+        health = enemySettings.maxHealth;
+        agent.angularSpeed = enemySettings.angularSpeed;
     }
 
     public void Init(PlayerController target)
@@ -40,6 +42,8 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     void Update()
     {
+        if (gameManager.GameState != GameState.Started) return;
+
         if (playerController != null && !isDead && !isAttacking)
         {
             float distance = Vector3.Distance(transform.position, playerController.transform.position);
@@ -82,8 +86,17 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void Die()
     {
         isDead = true;
+        agent.isStopped = true;
+        agent.enabled = false;
         enemyCollider.enabled = false;
         animationController.SetAnimationState(EnemyAnimationState.Death);
-        agent.isStopped = true;
+
+        StartCoroutine(DieAndReturnToPool());
+    }
+
+    private System.Collections.IEnumerator DieAndReturnToPool()
+    {
+        yield return new WaitForSeconds(2f);
+        enemyPool.SendToPool(this);
     }
 }

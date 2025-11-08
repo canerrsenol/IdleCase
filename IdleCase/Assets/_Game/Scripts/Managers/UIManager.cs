@@ -4,8 +4,8 @@ using UnityEngine;
 public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField] private GlobalEventsSO globalEventsSO;
-    [SerializeField] private GameObject _levelEndBackground;
-    [SerializeField] private GameObject  _winPanel, _losePanel;
+    [SerializeField] private GameObject levelEndBackground;
+    [SerializeField] private GameObject  winPanel, losePanel, inGamePanel;
     [SerializeField] private TextMeshProUGUI levelText;
     private GameManager gameManager;
     private SaveManager saveManager;
@@ -27,21 +27,23 @@ public class UIManager : MonoSingleton<UIManager>
         switch (gameState)
         {
             case GameState.Initialized:
-                levelText.text = "Level " + (saveManager.playerProgress.currentLevel + 1).ToString();
-                _winPanel.SetActive(false);
-                _losePanel.SetActive(false);
-                _levelEndBackground.SetActive(false);
+                winPanel.SetActive(false);
+                losePanel.SetActive(false);
+                levelEndBackground.SetActive(false);
                 break;
             case GameState.Started:
+                inGamePanel.SetActive(true);
                 levelText.text = "Level " + (saveManager.playerProgress.currentLevel + 1).ToString();
                 break;
             case GameState.Win:
-                _winPanel.SetActive(true);
-                _levelEndBackground.SetActive(true);
+                winPanel.SetActive(true);
+                levelEndBackground.SetActive(true);
+                inGamePanel.SetActive(false);
                 break;
             case GameState.Lose:
-                _losePanel.SetActive(true);
-                _levelEndBackground.SetActive(true);
+                losePanel.SetActive(true);
+                levelEndBackground.SetActive(true);
+                inGamePanel.SetActive(false);
                 break;
         }
     }

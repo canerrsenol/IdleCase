@@ -24,7 +24,7 @@ public class TimerController : MonoBehaviour
 
     private void OnGamePhaseChanged(GameState gamePhase)
     {
-        if (gamePhase == GameState.Initialized)
+        if (gamePhase == GameState.Started)
         {
             if (countDownTimer != null)
             {
@@ -32,12 +32,10 @@ public class TimerController : MonoBehaviour
             }
 
             var totalSeconds = LevelManager.I.CurrentLevelData.totalSeconds;
-            globalEventsSO.UIEvents.RemainingTime?.Invoke((int)totalSeconds);
+            globalEventsSO.TimerEvents.RemainingTime?.Invoke((int)totalSeconds);
             countDownTimer = new CountdownTimer(totalSeconds);
             countDownTimer.OnTimerStop += OnTimerStop;
-        }
-        if (gamePhase == GameState.Started)
-        {
+
             countDownTimer?.Start();
         }
     }
@@ -47,7 +45,7 @@ public class TimerController : MonoBehaviour
         if (countDownTimer != null && countDownTimer.IsRunning && gameManager.GameState == GameState.Started) 
         {
             countDownTimer.Tick(Time.deltaTime);
-            globalEventsSO.UIEvents.RemainingTime.Invoke((int)countDownTimer.Time);
+            globalEventsSO.TimerEvents.RemainingTime?.Invoke((int)countDownTimer.Time);
         }
     }
 

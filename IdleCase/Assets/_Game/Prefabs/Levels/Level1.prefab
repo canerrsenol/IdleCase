@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988635d75559a4246ad3f3ac27115abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalSeconds: 180
+  totalSeconds: 10
   baseEnemyCount: 5
   enemyCountIncrement: 2
   timeBetweenWaves: 20
