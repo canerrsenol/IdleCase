@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IDamageable
 {
     [SerializeField] private EnemySettingsSO enemySettings;
+    [SerializeField] private float health = 100f;
     private NavMeshAgent agent;
     private EnemyAnimationController animationController;
     private PlayerController playerController;
+    private bool isDead = false;
 
     void Awake()
     {
@@ -42,5 +44,20 @@ public class EnemyController : MonoBehaviour
                 animationController.SetAnimationState(EnemyAnimationState.Running);
             }
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        animationController.SetAnimationState(EnemyAnimationState.Death);
+        agent.isStopped = true;
     }
 }
