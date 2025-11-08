@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 879a9e2b398bcab468cb03af5b197fc5, type: 3}
   m_Name: MovementSettingsSO
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  rotationSpeed: 720
+  moveSpeed: 3
+  rotationSpeed: 360
