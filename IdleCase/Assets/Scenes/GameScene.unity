@@ -1195,10 +1195,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelList:
   - {fileID: 2465812693411488110, guid: 63ab57271ff7f73479003729c62e6c69, type: 3}
-  - {fileID: 2465812693411488110, guid: 63ab57271ff7f73479003729c62e6c69, type: 3}
+  - {fileID: 2465812693411488110, guid: f0058bd6e78dec04cb9563914792284c, type: 3}
+  - {fileID: 2465812693411488110, guid: d978900ba17df6142844a75569e3ec65, type: 3}
   secondLevelList:
   - {fileID: 2465812693411488110, guid: 63ab57271ff7f73479003729c62e6c69, type: 3}
   - {fileID: 2465812693411488110, guid: 63ab57271ff7f73479003729c62e6c69, type: 3}
+  - {fileID: 2465812693411488110, guid: f0058bd6e78dec04cb9563914792284c, type: 3}
+  - {fileID: 2465812693411488110, guid: d978900ba17df6142844a75569e3ec65, type: 3}
 --- !u!114 &802422960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1553,7 +1556,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.49204373, y: 0, z: 0, w: 0.8705705}
-  m_LocalPosition: {x: 0, y: 10, z: -7.3212476}
+  m_LocalPosition: {x: 0, y: 12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

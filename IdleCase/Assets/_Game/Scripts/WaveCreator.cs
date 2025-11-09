@@ -11,12 +11,32 @@ public class WaveCreator : MonoBehaviour
     private float elapsedTime = 0f;
     private bool isRunning = false;
     [SerializeField] private GlobalEventsSO globalEventsSO;
+    private GameManager gameManager;
 
     private void Awake()
     {
         enemyPool = EnemyPool.Instance;
+        gameManager = GameManager.Instance;
         levelData = LevelManager.Instance.CurrentLevelData;
         playerController = FindAnyObjectByType<PlayerController>();
+    }
+
+    void OnEnable()
+    {
+        gameManager.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable()
+    {
+        gameManager.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    private void OnGameStateChanged(GameState gameState)
+    {
+        if(gameState == GameState.Win || gameState == GameState.Lose)
+        {
+            StopAllCoroutines();
+        }
     }
 
     private void Start()

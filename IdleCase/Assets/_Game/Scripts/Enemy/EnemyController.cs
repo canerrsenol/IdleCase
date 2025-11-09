@@ -9,16 +9,26 @@ public class EnemyController : MonoBehaviour, IDamageable
     [SerializeField] private NavMeshAgent agent;
     [SerializeField] private Collider enemyCollider;
     [SerializeField] private EnemyAnimationController animationController;
+    
     private PlayerController playerController;
+    private Transform playerTransform;
     private EnemyPool enemyPool;
     private GameManager gameManager;
     private bool isDead = false;
     private bool isAttacking = false;
+    
+    // Performans optimizasyonları
+    private float updateInterval = 0.1f;
+    private float nextUpdateTime = 0f;
+    private float attackRangeSqr;
+    private Vector3 cachedPlayerPosition;
+    private WaitForSeconds deathDelay;
 
     void Awake()
     {
         enemyPool = EnemyPool.Instance;
         gameManager = GameManager.Instance;
+        deathDelay = new WaitForSeconds(2f);
     }
 
     void OnEnable()
@@ -31,18 +41,24 @@ public class EnemyController : MonoBehaviour, IDamageable
         agent.enabled = true;
         enemyCollider.enabled = true;
         isDead = false;
+        isAttacking = false;
         health = enemySettings.maxHealth;
-        animationController.SetAnimationState(EnemyAnimationState.Running);
-
+        
         agent.speed = enemySettings.moveSpeed;
         agent.acceleration = enemySettings.acceleration;
-        health = enemySettings.maxHealth;
         agent.angularSpeed = enemySettings.angularSpeed;
+        
+        attackRangeSqr = enemySettings.attackRange * enemySettings.attackRange;
+        
+        animationController.SetAnimationState(EnemyAnimationState.Running);
+        
+        nextUpdateTime = 0f;
     }
 
     void OnDisable()
     {
         gameManager.OnGameStateChanged -= OnGameStateChanged;
+        StopAllCoroutines();
     }
 
     private void OnGameStateChanged(GameState gameState)
@@ -50,6 +66,7 @@ public class EnemyController : MonoBehaviour, IDamageable
         if (gameState != GameState.Started)
         {
             playerController = null;
+            playerTransform = null;
             agent.enabled = false;
 
             if (enemyPool != null)
@@ -60,25 +77,48 @@ public class EnemyController : MonoBehaviour, IDamageable
     public void Init(PlayerController target)
     {
         playerController = target;
+        if (target != null)
+        {
+            playerTransform = target.transform;
+            cachedPlayerPosition = playerTransform.position;
+        }
     }
 
     void Update()
     {
-        if (gameManager.GameState != GameState.Started) return;
+        if (gameManager.GameState != GameState.Started || isDead) return;
+        
+        if (playerTransform == null) return;
 
-        if (playerController != null && !isDead && !isAttacking)
+        if (Time.time < nextUpdateTime) return;
+        
+        nextUpdateTime = Time.time + updateInterval;
+        
+        cachedPlayerPosition = playerTransform.position;
+
+        if (!isAttacking)
         {
-            float distance = Vector3.Distance(transform.position, playerController.transform.position);
-            if (distance <= enemySettings.attackRange)
+            float distanceSqr = (transform.position - cachedPlayerPosition).sqrMagnitude;
+            
+            if (distanceSqr <= attackRangeSqr)
             {
                 isAttacking = true;
                 agent.isStopped = true;
+                agent.ResetPath();
                 animationController.SetAnimationState(EnemyAnimationState.Attack);
             }
             else
             {
-                agent.isStopped = false;
-                agent.SetDestination(playerController.transform.position);
+                if (agent.isStopped)
+                {
+                    agent.isStopped = false;
+                }
+                
+                if (!agent.hasPath || !agent.pathPending)
+                {
+                    agent.SetDestination(cachedPlayerPosition);
+                }
+                
                 animationController.SetAnimationState(EnemyAnimationState.Running);
             }
         }
@@ -88,7 +128,7 @@ public class EnemyController : MonoBehaviour, IDamageable
     {
         if (isDead) return;
 
-        if (playerController != null && !isDead)
+        if (playerController != null)
         {
             playerController.GetComponent<IDamageable>()?.TakeDamage(enemySettings.attackDamage);
         }
@@ -109,7 +149,9 @@ public class EnemyController : MonoBehaviour, IDamageable
     private void Die()
     {
         isDead = true;
+        isAttacking = false;
         agent.isStopped = true;
+        agent.ResetPath();
         agent.enabled = false;
         enemyCollider.enabled = false;
         animationController.SetAnimationState(EnemyAnimationState.Death);
@@ -121,7 +163,7 @@ public class EnemyController : MonoBehaviour, IDamageable
 
     private System.Collections.IEnumerator DieAndReturnToPool()
     {
-        yield return new WaitForSeconds(2f);
+        yield return deathDelay;
         enemyPool.SendToPool(this);
     }
 }

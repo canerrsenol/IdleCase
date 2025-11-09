@@ -46,12 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988635d75559a4246ad3f3ac27115abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalSeconds: 10
+  totalSeconds: 180
   baseEnemyCount: 5
-  enemyCountIncrement: 2
-  timeBetweenWaves: 20
+  enemyCountIncrement: 3
+  timeBetweenWaves: 15
   spawnRadius: 10
-  spawnInterval: 0.3
+  spawnInterval: 0.4
 --- !u!1 &8417011336529291152
 GameObject:
   m_ObjectHideFlags: 0
