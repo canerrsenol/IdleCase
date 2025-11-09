@@ -98,6 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floatingJoystick: {fileID: 0}
   movementSettings: {fileID: 11400000, guid: ef46686b39126e1468204850f304813b, type: 2}
+  shootController: {fileID: 4557613860912740233}
+  characterVisualTransform: {fileID: 6036910188683531807}
 --- !u!114 &4557613860912740233
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -31,17 +31,19 @@ public class ShootController : MonoBehaviour
         canShoot = state;
     }
 
+    public bool HasTarget()
+    {
+        return closestEnemy != null;
+    }
+
     private void Update()
     {
         if (!canShoot) return;
-
         if (closestEnemy == null) return;
 
-        // hedef yönü
         Vector3 direction = (closestEnemy.transform.position - characterVisualTransform.position).normalized;
         direction.y = 0f;
 
-        // karakteri hedefe döndür
         if (direction.sqrMagnitude > 0.001f)
         {
             Quaternion targetRot = Quaternion.LookRotation(direction);
@@ -52,9 +54,8 @@ public class ShootController : MonoBehaviour
             );
         }
 
-        // karakter hedefe baktı mı kontrol et
         float angle = Vector3.Angle(characterVisualTransform.forward, direction);
-        if (angle < 10f) // biraz tolerans bırak
+        if (angle < 10f)
         {
             TryShoot();
         }
@@ -67,12 +68,11 @@ public class ShootController : MonoBehaviour
 
         shootTimer = 0f;
 
-        // pool’dan mermi al ve yönlendir
         Bullet bullet = bulletPool.GetFromPool();
         bullet.transform.position = shootPoint.position;
 
         var lookPosition = closestEnemy.transform.position;
-        lookPosition.y = bullet.transform.position.y; // Y eksenini sabit tut
+        lookPosition.y = bullet.transform.position.y;
 
         bullet.transform.LookAt(lookPosition);
         bullet.gameObject.SetActive(true);

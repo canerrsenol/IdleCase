@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Die()
     {
-        GameManager.Instance.ChangeGameState(GameState.Lose);
+        gameManager.ChangeGameState(GameState.Lose);
         shootController.SetShootControllerState(false);
         movementController.SetMovementControllerState(false);
         animationController.SetAnimationState(PlayerAnimationState.Death);
