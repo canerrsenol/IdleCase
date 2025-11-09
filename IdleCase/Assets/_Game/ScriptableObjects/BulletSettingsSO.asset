@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BulletSettingsSO
   m_EditorClassIdentifier: 
   damage: 25
-  speed: 50
+  speed: 25
   lifetime: 2

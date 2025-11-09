@@ -46,19 +46,19 @@ NavMeshAgent:
   m_GameObject: {fileID: 5518424612388648946}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Speed: 3.5
   m_Acceleration: 2
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 1
 --- !u!136 &8286126357012721097
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySettings: {fileID: 11400000, guid: 5bbc3ffb90182b042a69523261f0036d, type: 2}
+  globalEvents: {fileID: 11400000, guid: 26234039199805c44a5f8568f1629d5d, type: 2}
   health: 100
   agent: {fileID: 6356796571075105054}
   enemyCollider: {fileID: 8286126357012721097}
@@ -188,12 +189,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2839295581537669554, guid: 15d8ea09447a53c45a658382e5e370e1, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2839295581537669554, guid: 15d8ea09447a53c45a658382e5e370e1, type: 3}
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2839295581537669554, guid: 15d8ea09447a53c45a658382e5e370e1, type: 3}
       propertyPath: m_ReceiveShadows
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2839295581537669554, guid: 15d8ea09447a53c45a658382e5e370e1, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -2839295581537669554, guid: 15d8ea09447a53c45a658382e5e370e1, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -239,7 +248,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 15d8ea09447a53c45a658382e5e370e1, type: 3}
   m_Controller: {fileID: 9100000, guid: a219071bb0512eb498864bf9175f5d07, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

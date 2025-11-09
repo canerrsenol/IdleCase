@@ -5,12 +5,14 @@ public class Bullet : MonoBehaviour
     [SerializeField] private BulletSettingsSO settings;
     private float lifetimeTimer;
     private BulletPool bulletPool;
+    private BulletHitParticlePool hitParticlePool;
     private Transform cachedTransform;
     private bool isActive;
 
     private void Awake()
     {
         bulletPool = BulletPool.Instance;
+        hitParticlePool = BulletHitParticlePool.Instance;
         cachedTransform = transform;
     }
 
@@ -40,6 +42,11 @@ public class Bullet : MonoBehaviour
         if (other.TryGetComponent<IDamageable>(out var damageable))
         {
             damageable.TakeDamage(settings.damage);
+
+            var hitParticle = hitParticlePool.GetFromPool();
+            hitParticle.transform.position = cachedTransform.position;
+            hitParticle.transform.rotation = Quaternion.LookRotation(-cachedTransform.forward);
+            hitParticle.gameObject.SetActive(true);
         }
 
         BackToPool();

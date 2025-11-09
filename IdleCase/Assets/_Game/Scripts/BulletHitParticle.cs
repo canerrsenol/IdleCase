@@ -2,5 +2,15 @@ using UnityEngine;
 
 public class BulletHitParticle : MonoBehaviour
 {
-    // Particle ile ilgili ek özellikler ekleyebilirsin
+    private BulletHitParticlePool pool;
+
+    private void Awake()
+    {
+        pool = BulletHitParticlePool.Instance;
+    }
+
+    void OnParticleSystemStopped()
+    {
+        pool.SendToPool(this);
+    }
 }

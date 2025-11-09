@@ -1,9 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : MonoSingleton<LevelManager>
 {
-    public static LevelManager I;
     private LevelData currentLevelData;
     public LevelData CurrentLevelData => currentLevelData;
     [SerializeField] private LevelData[] levelList;
@@ -11,11 +10,6 @@ public class LevelManager : MonoBehaviour
     private GameObject levelContent;
     public GameObject LevelContent => levelContent;
     public int LevelCount => levelList.Length;
-
-    private void Awake()
-    {
-        I = this;
-    }
 
     private void Start()
     {

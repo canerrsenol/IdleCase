@@ -10,11 +10,12 @@ public class WaveCreator : MonoBehaviour
     private int currentWave = 0;
     private float elapsedTime = 0f;
     private bool isRunning = false;
+    [SerializeField] private GlobalEventsSO globalEventsSO;
 
     private void Awake()
     {
         enemyPool = EnemyPool.Instance;
-        levelData = LevelManager.I.CurrentLevelData;
+        levelData = LevelManager.Instance.CurrentLevelData;
         playerController = FindAnyObjectByType<PlayerController>();
     }
 
@@ -31,6 +32,7 @@ public class WaveCreator : MonoBehaviour
         while (elapsedTime < levelData.totalSeconds)
         {
             currentWave++;
+            globalEventsSO.WaveEvents.OnWaveStarted?.Invoke(currentWave);
             SpawnWave(currentWave);
             yield return new WaitForSeconds(levelData.timeBetweenWaves);
             elapsedTime += levelData.timeBetweenWaves;

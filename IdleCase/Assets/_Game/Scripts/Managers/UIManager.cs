@@ -9,11 +9,13 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField] private TextMeshProUGUI levelText;
     private GameManager gameManager;
     private SaveManager saveManager;
+    private LevelManager levelManager;
 
     private void OnEnable()
     {
         gameManager = GameManager.Instance;
         saveManager = SaveManager.Instance;
+        levelManager = LevelManager.Instance;
         gameManager.OnGameStateChanged += GameStateChanged;
     }
 
@@ -32,6 +34,9 @@ public class UIManager : MonoSingleton<UIManager>
                 levelEndBackground.SetActive(false);
                 break;
             case GameState.Started:
+                winPanel.SetActive(false);
+                losePanel.SetActive(false);
+                levelEndBackground.SetActive(false);
                 inGamePanel.SetActive(true);
                 levelText.text = "Level " + (saveManager.playerProgress.currentLevel + 1).ToString();
                 break;
@@ -46,5 +51,15 @@ public class UIManager : MonoSingleton<UIManager>
                 inGamePanel.SetActive(false);
                 break;
         }
+    }
+
+    public void RestartLevel()
+    {
+        levelManager.LoadLevel();
+    }
+
+    public void NextLevel()
+    {
+        levelManager.LoadNextLevel();
     }
 }

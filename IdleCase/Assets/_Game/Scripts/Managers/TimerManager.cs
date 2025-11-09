@@ -31,7 +31,7 @@ public class TimerController : MonoBehaviour
                 countDownTimer.OnTimerStop -= OnTimerStop;
             }
 
-            var totalSeconds = LevelManager.I.CurrentLevelData.totalSeconds;
+            var totalSeconds = LevelManager.Instance.CurrentLevelData.totalSeconds;
             globalEventsSO.TimerEvents.RemainingTime?.Invoke((int)totalSeconds);
             countDownTimer = new CountdownTimer(totalSeconds);
             countDownTimer.OnTimerStop += OnTimerStop;

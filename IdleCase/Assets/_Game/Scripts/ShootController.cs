@@ -4,6 +4,7 @@ public class ShootController : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private ShootSettingsSO shootSettings;
+    [SerializeField] private ParticleSystem shootEffect;
     [SerializeField] private LayerMask enemyLayerMask;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private Transform characterVisualTransform;
@@ -39,25 +40,26 @@ public class ShootController : MonoBehaviour
     private void Update()
     {
         if (!canShoot) return;
-        if (closestEnemy == null) return;
-
-        Vector3 direction = (closestEnemy.transform.position - characterVisualTransform.position).normalized;
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude > 0.001f)
+        if (closestEnemy != null)
         {
-            Quaternion targetRot = Quaternion.LookRotation(direction);
-            characterVisualTransform.rotation = Quaternion.Slerp(
-                characterVisualTransform.rotation,
-                targetRot,
-                rotationSpeed * Time.deltaTime
-            );
-        }
+            Vector3 direction = (closestEnemy.transform.position - characterVisualTransform.position).normalized;
+            direction.y = 0f;
 
-        float angle = Vector3.Angle(characterVisualTransform.forward, direction);
-        if (angle < 10f)
-        {
-            TryShoot();
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(direction);
+                characterVisualTransform.rotation = Quaternion.Slerp(
+                    characterVisualTransform.rotation,
+                    targetRot,
+                    rotationSpeed * Time.deltaTime
+                );
+            }
+
+            float angle = Vector3.Angle(characterVisualTransform.forward, direction);
+            if (angle < 10f)
+            {
+                TryShoot();
+            }
         }
     }
 
@@ -76,6 +78,8 @@ public class ShootController : MonoBehaviour
 
         bullet.transform.LookAt(lookPosition);
         bullet.gameObject.SetActive(true);
+
+        shootEffect.Play();
     }
 
     private void FindClosestEnemy()
